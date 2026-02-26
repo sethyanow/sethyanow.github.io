@@ -11,12 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      pages: write
-      id-token: write
       contents: read
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout site
         uses: actions/checkout@v4
@@ -25,6 +20,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: sethyanow/markymark
+          ref: docs-site
           path: _projects/markymark
 
       - name: Setup Bun
@@ -46,8 +42,11 @@ jobs:
 
       - name: Assemble _site
         run: |
+          set -e
+          test -d dist || { echo 'Error: root dist/ not found'; exit 1; }
+          test -d _projects/markymark/docs-site/dist || { echo 'Error: markymark docs-site/dist not found'; exit 1; }
           mkdir _site
-          cp -r dist/* _site/
+          cp -r dist/. _site/
           mv _projects/markymark/docs-site/dist _site/markymark
 
       - name: Upload artifact
@@ -55,6 +54,16 @@ jobs:
         with:
           path: _site
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

@@ -69,7 +69,7 @@ describe("Astro build", () => {
     for (const page of pages) {
       const html = await Bun.file(join(distDir, page)).text();
       expect(html).toContain("/_astro/");
-      expect(html).toContain('class="min-h-screen');
+      expect(html).toMatch(/class="[^"]*\bmin-h-screen\b/);
     }
   });
 
@@ -77,6 +77,7 @@ describe("Astro build", () => {
     const html = await Bun.file(join(distDir, "index.html")).text();
     expect(html).toContain("md:hidden");
     expect(html).toContain("md:flex");
+    expect(html).toContain('aria-hidden="true"');
   });
 
   test("no non-bun lock files exist", () => {

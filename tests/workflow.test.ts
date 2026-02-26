@@ -19,7 +19,7 @@ describe("Deploy workflow", () => {
   });
 
   test("only trigger is workflow_dispatch", () => {
-    const triggers = Object.keys(workflow.on || workflow.true || {});
+    const triggers = Object.keys(workflow.on || {});
     expect(triggers).toEqual(["workflow_dispatch"]);
   });
 
@@ -34,11 +34,22 @@ describe("Deploy workflow", () => {
     expect(yaml).toContain("sethyanow/markymark");
   });
 
-  test("has required permissions", () => {
-    const job = workflow.jobs?.build ?? workflow.jobs?.deploy;
-    const perms = job?.permissions ?? workflow.permissions;
-    expect(perms?.pages).toBe("write");
-    expect(perms?.["id-token"]).toBe("write");
+  test("has separate build and deploy jobs", () => {
+    expect(workflow.jobs.build).toBeDefined();
+    expect(workflow.jobs.deploy).toBeDefined();
+  });
+
+  test("deploy job depends on build job", () => {
+    expect(workflow.jobs.deploy.needs).toContain("build");
+  });
+
+  test("build job has only contents:read permission", () => {
+    expect(workflow.jobs.build.permissions).toEqual({ contents: "read" });
+  });
+
+  test("deploy job has pages:write and id-token:write", () => {
+    expect(workflow.jobs.deploy.permissions?.pages).toBe("write");
+    expect(workflow.jobs.deploy.permissions?.["id-token"]).toBe("write");
   });
 
   test("uses upload-pages-artifact and deploy-pages", () => {
@@ -76,5 +87,17 @@ describe("Deploy workflow", () => {
   test("uses bun run build:prod for markymark docs", () => {
     const yaml = JSON.stringify(workflow);
     expect(yaml).toContain("build:prod");
+  });
+
+  test("checks out markymark docs-site branch", () => {
+    const yaml = JSON.stringify(workflow);
+    expect(yaml).toContain('"ref":"docs-site"');
+  });
+
+  test("assembly step validates directories and uses dotfile-safe copy", () => {
+    const yaml = JSON.stringify(workflow);
+    expect(yaml).toContain("set -e");
+    expect(yaml).toContain("test -d dist");
+    expect(yaml).toContain("cp -r dist/.");
   });
 });
