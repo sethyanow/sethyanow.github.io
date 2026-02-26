@@ -1,0 +1,55 @@
+---
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/projects", label: "Projects" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="bg-white border-b border-gray-200">
+  <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+      Seth Yanow
+    </a>
+
+    <input type="checkbox" id="nav-toggle" class="hidden peer" />
+    <label
+      for="nav-toggle"
+      class="md:hidden cursor-pointer p-2 text-gray-600 hover:text-gray-900"
+      aria-label="Toggle navigation"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </label>
+    <label
+      for="nav-toggle"
+      class="fixed inset-0 bg-black/20 hidden peer-checked:block md:hidden z-10"
+      aria-hidden="true"
+    ></label>
+
+    <ul class="hidden peer-checked:flex flex-col absolute top-16 left-0 right-0 bg-white border-b border-gray-200 px-4 pb-4 md:static md:flex md:flex-row md:border-0 md:p-0 md:gap-6 z-20">
+      {navLinks.map(({ href, label }) => {
+        const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(href + "/"));
+        return (
+          <li>
+            <a
+              href={href}
+              aria-current={isActive ? "page" : undefined}
+              class:list={[
+                "block py-2 md:py-0 transition-colors",
+                isActive
+                  ? "text-blue-600 font-semibold"
+                  : "text-gray-600 hover:text-blue-600",
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</header>

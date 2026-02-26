@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+---
+
+<Layout title="Home">
+  <Hero
+    heading="Seth Yanow"
+    subtitle="Software engineer building tools for developers."
+  />
+  <section class="max-w-4xl mx-auto px-4 pb-16">
+    <p class="text-lg text-gray-600 text-center">
+      Welcome to my corner of the internet. Check out my
+      <a href="/projects" class="text-blue-600 hover:underline">projects</a>
+      or learn more
+      <a href="/about" class="text-blue-600 hover:underline">about me</a>.
+    </p>
+  </section>
+</Layout>

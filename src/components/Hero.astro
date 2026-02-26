@@ -1,0 +1,15 @@
+---
+interface Props {
+  heading: string;
+  subtitle: string;
+}
+
+const { heading, subtitle } = Astro.props;
+---
+
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-5xl font-bold text-gray-900 mb-4">{heading}</h1>
+    <p class="text-xl text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+  </div>
+</section>

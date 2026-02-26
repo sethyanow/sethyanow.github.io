@@ -1,0 +1,69 @@
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v4
+
+      - name: Checkout markymark
+        uses: actions/checkout@v4
+        with:
+          repository: sethyanow/markymark
+          ref: docs-site
+          path: _projects/markymark
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install root dependencies
+        run: bun install
+
+      - name: Build root site
+        run: bun run build
+
+      - name: Install markymark docs dependencies
+        run: bun install
+        working-directory: _projects/markymark/docs-site
+
+      - name: Build markymark docs
+        run: bun run build:prod
+        working-directory: _projects/markymark/docs-site
+
+      - name: Assemble _site
+        run: |
+          set -e
+          test -d dist || { echo 'Error: root dist/ not found'; exit 1; }
+          test -d _projects/markymark/docs-site/dist || { echo 'Error: markymark docs-site/dist not found'; exit 1; }
+          mkdir _site
+          cp -r dist/. _site/
+          mv _projects/markymark/docs-site/dist _site/markymark
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
