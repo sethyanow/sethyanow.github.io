@@ -109,7 +109,7 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
-# Agent Instructions
+# Beads Instructions
 
 This project uses **bd** (beads) for issue tracking. Run `bd onboard` to get started.
 
