@@ -11,5 +11,8 @@
     "astro": "^5.18.0",
     "@tailwindcss/vite": "^4.2.1",
     "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "yaml": "^2.8.2"
   }
 }
