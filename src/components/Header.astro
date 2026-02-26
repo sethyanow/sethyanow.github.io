@@ -31,21 +31,25 @@ const currentPath = Astro.url.pathname;
     ></label>
 
     <ul class="hidden peer-checked:flex flex-col absolute top-16 left-0 right-0 bg-white border-b border-gray-200 px-4 pb-4 md:static md:flex md:flex-row md:border-0 md:p-0 md:gap-6 z-20">
-      {navLinks.map(({ href, label }) => (
-        <li>
-          <a
-            href={href}
-            class:list={[
-              "block py-2 md:py-0 transition-colors",
-              currentPath === href || (href !== "/" && currentPath.startsWith(href))
-                ? "text-blue-600 font-semibold"
-                : "text-gray-600 hover:text-blue-600",
-            ]}
-          >
-            {label}
-          </a>
-        </li>
-      ))}
+      {navLinks.map(({ href, label }) => {
+        const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(href + "/"));
+        return (
+          <li>
+            <a
+              href={href}
+              aria-current={isActive ? "page" : undefined}
+              class:list={[
+                "block py-2 md:py-0 transition-colors",
+                isActive
+                  ? "text-blue-600 font-semibold"
+                  : "text-gray-600 hover:text-blue-600",
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </nav>
 </header>

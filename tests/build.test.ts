@@ -80,6 +80,14 @@ describe("Astro build", () => {
     expect(html).toContain('aria-hidden="true"');
   });
 
+  test("active nav link has aria-current page attribute", async () => {
+    const html = await Bun.file(join(distDir, "about/index.html")).text();
+    // The About page link should have aria-current="page"
+    expect(html).toMatch(/href="\/about"[^>]*aria-current="page"/);
+    // Home link should NOT have aria-current on a non-home page
+    expect(html).not.toMatch(/href="\/"[^>]*aria-current="page"/);
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);
