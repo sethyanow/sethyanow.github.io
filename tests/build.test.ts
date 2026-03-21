@@ -167,6 +167,25 @@ describe("Astro build", () => {
     }
   });
 
+  test("favicon is present", async () => {
+    const html = await Bun.file(join(distDir, "index.html")).text();
+    expect(html).toMatch(/rel="icon"/);
+  });
+
+  test("theme-color meta tag is present", async () => {
+    const html = await Bun.file(join(distDir, "index.html")).text();
+    expect(html).toMatch(/name="theme-color"/);
+  });
+
+  test("OpenGraph meta tags are present", async () => {
+    const pages = ["index.html", "about/index.html", "projects/index.html"];
+    for (const page of pages) {
+      const html = await Bun.file(join(distDir, page)).text();
+      expect(html).toMatch(/property="og:title"/);
+      expect(html).toMatch(/property="og:description"/);
+    }
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);

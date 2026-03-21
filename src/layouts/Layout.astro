@@ -9,6 +9,9 @@ interface Props {
 }
 
 const { title, description = "Seth Yanow's personal site" } = Astro.props;
+const fullTitle = `${title} | Seth Yanow`;
+const siteUrl = "https://sethyanow.github.io";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 ---
 
 <!doctype html>
@@ -17,10 +20,18 @@ const { title, description = "Seth Yanow's personal site" } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1f1c19" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>S</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
-    <title>{title} | Seth Yanow</title>
+    <title>{fullTitle}</title>
   </head>
   <body class="min-h-screen flex flex-col bg-sand-50 text-sand-900 dark:bg-sand-950 dark:text-sand-100">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-sand-900 focus:text-sand-50 focus:rounded dark:focus:bg-sand-100 dark:focus:text-sand-900">Skip to content</a>
