@@ -208,6 +208,13 @@ describe("Astro build", () => {
     expect(html).not.toMatch(/class="[^"]*\bmax-w-none\b/);
   });
 
+  test("mobile nav uses flow-based layout, not magic offset", async () => {
+    const html = await Bun.file(join(distDir, "index.html")).text();
+    // nav-menu should NOT use absolute positioning with magic top-16
+    expect(html).not.toMatch(/id="nav-menu"[^>]*\btop-16\b/);
+    expect(html).not.toMatch(/id="nav-menu"[^>]*\babsolute\b/);
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);

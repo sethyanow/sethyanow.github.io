@@ -8,8 +8,8 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="bg-sand-50 border-b border-sand-200 dark:bg-sand-950 dark:border-sand-800">
-  <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+<header class="relative z-20 bg-sand-50 border-b border-sand-200 dark:bg-sand-950 dark:border-sand-800">
+  <nav class="max-w-4xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
     <a href="/" class="text-xl font-bold text-sand-900 hover:text-accent-600 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:text-sand-100 dark:hover:text-accent-400 dark:focus-visible:outline-accent-400">
       Seth Yanow
     </a>
@@ -32,7 +32,7 @@ const currentPath = Astro.url.pathname;
       aria-hidden="true"
     ></div>
 
-    <ul id="nav-menu" class="hidden flex-col absolute top-16 left-0 right-0 bg-sand-50 border-b border-sand-200 px-4 pb-4 md:static md:flex md:flex-row md:border-0 md:p-0 md:gap-6 z-20 dark:bg-sand-900 dark:border-sand-800">
+    <ul id="nav-menu" class="hidden basis-full flex-col relative z-20 pt-4 mt-4 border-t border-sand-200 md:flex md:basis-auto md:flex-row md:pt-0 md:mt-0 md:border-0 md:gap-6 dark:border-sand-800">
       {navLinks.map(({ href, label }) => {
         const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(href + "/"));
         return (
