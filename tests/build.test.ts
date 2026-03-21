@@ -195,6 +195,19 @@ describe("Astro build", () => {
     expect(css).toContain("prefers-reduced-motion");
   });
 
+  test("projects grid adapts to item count (no forced 2-col)", async () => {
+    const html = await Bun.file(
+      join(distDir, "projects", "index.html")
+    ).text();
+    expect(html).not.toMatch(/class="[^"]*\bsm:grid-cols-2\b/);
+  });
+
+  test("about page text has comfortable reading width", async () => {
+    const html = await Bun.file(join(distDir, "about/index.html")).text();
+    // Text block should NOT be max-w-none (too wide for reading)
+    expect(html).not.toMatch(/class="[^"]*\bmax-w-none\b/);
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);
