@@ -186,6 +186,15 @@ describe("Astro build", () => {
     }
   });
 
+  test("prefers-reduced-motion is respected", async () => {
+    const astroDir = join(distDir, "_astro");
+    const files = await Array.fromAsync(new Bun.Glob("*.css").scan(astroDir));
+    const cssFile = files[0];
+    expect(cssFile).toBeDefined();
+    const css = await Bun.file(join(astroDir, cssFile)).text();
+    expect(css).toContain("prefers-reduced-motion");
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);
