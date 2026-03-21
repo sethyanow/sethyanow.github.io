@@ -215,6 +215,16 @@ describe("Astro build", () => {
     expect(html).not.toMatch(/id="nav-menu"[^>]*\babsolute\b/);
   });
 
+  test("custom 404 page exists with navigation", async () => {
+    expect(existsSync(join(distDir, "404.html"))).toBe(true);
+    const html = await Bun.file(join(distDir, "404.html")).text();
+    // Has the site layout (nav links for recovery)
+    expect(html).toContain('href="/"');
+    expect(html).toContain('href="/projects"');
+    // Has a clear message
+    expect(html).toMatch(/not found|doesn.t exist/i);
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);
