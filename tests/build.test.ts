@@ -125,6 +125,32 @@ describe("Astro build", () => {
     expect(html).not.toMatch(/class="[^"]*\btransition-all\b/);
   });
 
+  test("custom color palette replaces default blue", async () => {
+    const pages = ["index.html", "about/index.html", "projects/index.html"];
+    for (const page of pages) {
+      const html = await Bun.file(join(distDir, page)).text();
+      // No default Tailwind blue classes should remain
+      expect(html).not.toMatch(/class="[^"]*\bblue-/);
+    }
+    // Custom palette classes in use
+    const home = await Bun.file(join(distDir, "index.html")).text();
+    expect(home).toMatch(/\baccent-/);
+    expect(home).toMatch(/\bsand-/);
+  });
+
+  test("dark mode variants present on all pages", async () => {
+    const pages = ["index.html", "about/index.html", "projects/index.html"];
+    for (const page of pages) {
+      const html = await Bun.file(join(distDir, page)).text();
+      expect(html).toMatch(/dark:/);
+    }
+  });
+
+  test("about page does not use prose class without typography plugin", async () => {
+    const html = await Bun.file(join(distDir, "about/index.html")).text();
+    expect(html).not.toMatch(/class="[^"]*\bprose\b/);
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);

@@ -8,16 +8,16 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="bg-white border-b border-gray-200">
+<header class="bg-sand-50 border-b border-sand-200 dark:bg-sand-950 dark:border-sand-800">
   <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-    <a href="/" class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+    <a href="/" class="text-xl font-bold text-sand-900 hover:text-accent-600 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:text-sand-100 dark:hover:text-accent-400 dark:focus-visible:outline-accent-400">
       Seth Yanow
     </a>
 
     <button
       type="button"
       id="nav-toggle"
-      class="md:hidden cursor-pointer p-2 text-gray-600 hover:text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      class="md:hidden cursor-pointer p-2 text-sand-500 hover:text-sand-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:text-sand-400 dark:hover:text-sand-100 dark:focus-visible:outline-accent-400"
       aria-label="Toggle navigation"
       aria-expanded="false"
       aria-controls="nav-menu"
@@ -28,11 +28,11 @@ const currentPath = Astro.url.pathname;
     </button>
     <div
       id="nav-backdrop"
-      class="fixed inset-0 bg-black/20 hidden md:hidden z-10"
+      class="fixed inset-0 bg-sand-900/30 hidden md:hidden z-10 dark:bg-sand-950/50"
       aria-hidden="true"
     ></div>
 
-    <ul id="nav-menu" class="hidden flex-col absolute top-16 left-0 right-0 bg-white border-b border-gray-200 px-4 pb-4 md:static md:flex md:flex-row md:border-0 md:p-0 md:gap-6 z-20">
+    <ul id="nav-menu" class="hidden flex-col absolute top-16 left-0 right-0 bg-sand-50 border-b border-sand-200 px-4 pb-4 md:static md:flex md:flex-row md:border-0 md:p-0 md:gap-6 z-20 dark:bg-sand-900 dark:border-sand-800">
       {navLinks.map(({ href, label }) => {
         const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(href + "/"));
         return (
@@ -41,10 +41,10 @@ const currentPath = Astro.url.pathname;
               href={href}
               aria-current={isActive ? "page" : undefined}
               class:list={[
-                "block py-2 md:py-0 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600",
+                "block py-2 md:py-0 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:focus-visible:outline-accent-400",
                 isActive
-                  ? "text-blue-600 font-semibold"
-                  : "text-gray-600 hover:text-blue-600",
+                  ? "text-accent-600 font-semibold dark:text-accent-400"
+                  : "text-sand-600 hover:text-accent-600 dark:text-sand-400 dark:hover:text-accent-400",
               ]}
             >
               {label}

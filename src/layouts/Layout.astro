@@ -19,8 +19,8 @@ const { title, description = "Seth Yanow's personal site" } = Astro.props;
     <meta name="description" content={description} />
     <title>{title} | Seth Yanow</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-gray-900 focus:text-white focus:rounded">Skip to content</a>
+  <body class="min-h-screen flex flex-col bg-sand-50 text-sand-900 dark:bg-sand-950 dark:text-sand-100">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-sand-900 focus:text-sand-50 focus:rounded dark:focus:bg-sand-100 dark:focus:text-sand-900">Skip to content</a>
     <Header />
     <main id="main" class="flex-1">
       <slot />

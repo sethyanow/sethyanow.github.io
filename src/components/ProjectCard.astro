@@ -11,14 +11,14 @@ const { name, description, url, tags = [] } = Astro.props;
 
 <a
   href={url}
-  class="block p-6 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-colors transition-shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+  class="block p-6 bg-sand-50 rounded-lg border border-sand-200 hover:border-accent-300 hover:shadow-md transition-colors transition-shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600 dark:bg-sand-900 dark:border-sand-800 dark:hover:border-accent-600 dark:focus-visible:outline-accent-400"
 >
-  <h3 class="text-lg font-semibold text-gray-900 mb-2">{name}</h3>
-  <p class="text-gray-600 mb-3">{description}</p>
+  <h3 class="text-lg font-semibold text-sand-900 mb-2 dark:text-sand-100">{name}</h3>
+  <p class="text-sand-600 mb-3 dark:text-sand-400">{description}</p>
   {tags.length > 0 && (
     <div class="flex flex-wrap gap-2">
       {tags.map((tag) => (
-        <span class="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded-full">
+        <span class="text-xs px-2 py-1 bg-accent-100 text-accent-700 rounded-full dark:bg-accent-900 dark:text-accent-300">
           {tag}
         </span>
       ))}
