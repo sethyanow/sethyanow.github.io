@@ -151,6 +151,22 @@ describe("Astro build", () => {
     expect(html).not.toMatch(/class="[^"]*\bprose\b/);
   });
 
+  test("custom web font loaded with preconnect", async () => {
+    const html = await Bun.file(join(distDir, "index.html")).text();
+    expect(html).toContain("fonts.googleapis.com");
+    expect(html).toContain("Space+Grotesk");
+    expect(html).toContain('rel="preconnect"');
+  });
+
+  test("headings use tight tracking", async () => {
+    const pages = ["index.html", "about/index.html", "projects/index.html"];
+    for (const page of pages) {
+      const html = await Bun.file(join(distDir, page)).text();
+      // Every page has at least one h1 with tracking-tight
+      expect(html).toMatch(/<h1[^>]*tracking-tight/);
+    }
+  });
+
   test("no non-bun lock files exist", () => {
     const root = join(import.meta.dir, "..");
     expect(existsSync(join(root, "package-lock.json"))).toBe(false);

@@ -13,6 +13,9 @@
   --color-accent-800: oklch(35% 0.09 70);
   --color-accent-900: oklch(28% 0.06 70);
 
+  /* Font */
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+
   /* Warm Neutrals — Sand */
   --color-sand-50: oklch(98% 0.005 70);
   --color-sand-100: oklch(96% 0.008 70);
