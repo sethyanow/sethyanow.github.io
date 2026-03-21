@@ -11,7 +11,7 @@ const { name, description, url, tags = [] } = Astro.props;
 
 <a
   href={url}
-  class="block p-6 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
+  class="block p-6 bg-white rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-colors transition-shadow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
 >
   <h3 class="text-lg font-semibold text-gray-900 mb-2">{name}</h3>
   <p class="text-gray-600 mb-3">{description}</p>
