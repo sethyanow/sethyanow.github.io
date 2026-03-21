@@ -99,9 +99,12 @@ describe("Astro build", () => {
     expect(html).toContain("aria-expanded");
   });
 
-  test("focus-visible styles are defined", async () => {
-    const html = await Bun.file(join(distDir, "index.html")).text();
-    expect(html).toMatch(/focus-visible/);
+  test("focus-visible styles are defined globally in CSS", async () => {
+    const astroDir = join(distDir, "_astro");
+    const files = await Array.fromAsync(new Bun.Glob("*.css").scan(astroDir));
+    const css = await Bun.file(join(astroDir, files[0])).text();
+    expect(css).toContain("focus-visible");
+    expect(css).toContain("outline");
   });
 
   test("external links announce new tab to screen readers", async () => {
